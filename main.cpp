@@ -94,10 +94,19 @@ int main(int argc, char *argv[])
   test2.printAll();
   test2.print_all_stats();
 
+  std::cout << "\nTesting searching and operators:\n";
   std::pair <int, int> p = test2.search(8);
   // Test searching
   std::cout << "The first occurrence of 8 is at index " << p.first << " and it occurs " << p.second << " times\n";
+  // Test access operator overriding
   std::cout << "The element at index 6 is " << test2[6] << "\n";
+  
+  // Test removem
+  std::cout << "\nTesting removem:\n";
+  test2.removem(20, 2);
+  test2.removem(4, 3);
+  test2.removem(3, 2);
+  test2.printAll();
 
   // Testing the unique set
   std::set<float> set = test2.unique_set();

@@ -306,6 +306,44 @@ class Simple_stat {
         unique_data->next();
       }
     }
+
+    // remove a certain number of data items from the data object
+    void removem(int const& data, int const& num){
+      // Check that the value exists
+      unique_data->moveToStart();
+      num_repetitions->moveToStart();
+      int location = -1;
+      // loop through all unique numbers looking for a match
+      for(int i = 0; i < unique_data->length(); i++){
+        if(unique_data->getValue() == data){
+          location = i;
+          if(num_repetitions->getValue() > num){
+            int prev = num_repetitions->getValue();
+            num_repetitions->remove();
+            num_repetitions->insert(prev - num);
+            size -= num;
+          }
+          else if(num_repetitions->getValue() == num){
+            num_repetitions->remove();
+            unique_data->remove();
+            size -= num;
+            break;
+          }
+          else if(num_repetitions->getValue() < num){
+            std::cout << "Not enough repetitions to remove" << std::endl;
+            break;
+          }
+          break;
+        }
+        unique_data->next();
+        num_repetitions->next();
+      }
+
+      // Tell the user if the value doesn't exist
+      if(location == -1){
+        std::cout << "Value not found" << std::endl;
+      }
+    }
 };
 
 #endif
