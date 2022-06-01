@@ -1,6 +1,7 @@
 #ifndef SIMPLE_STAT_H
 #define SIMPLE_STAT_H
 
+// Simple stat class by Lingfeng Ren and Juan Segundo
 #include "math.h"
 
 #include "LinearStructures/link.h"
@@ -37,6 +38,90 @@ class Simple_stat {
     AList<T>* unique_data = new AList<T>(N);
     // This is more space efficient than storing the same repeated data assuming the data has an average repetitions per value of greater than 2
     AList<int>* num_repetitions = new AList<int>(N);
+
+    bool check_unique(const T& data){
+      // We use the check_unique method to check if the data is unique
+      if(unique_data->length() == 0){
+        return true;
+      }
+      unique_data->moveToStart();
+      for(int i = 0; i < unique_data->length(); i++){
+        if(unique_data->getValue() == data){
+          return false;
+        }
+        unique_data->next();
+      }
+      return true;
+    }
+
+    double calculate_mean(){
+      /*
+       How do we get the mean?
+       The mean is found by adding up things together then dividing by the number of things
+       */
+
+      // size is a private variable which is automatically incremented on insert
+      // sum is calculated before this function is called
+      return sum/size;
+    }
+
+
+    double calculate_SD(){
+
+      /*
+       How do we calculate standard
+
+      Standard deviation is found using the formula (Sum of (value of a data set minus the mean of the data set))^2)/(n-1)
+       This means that we are depend on the function/result of the equation for mean.
+
+       */
+
+      // Move the lists to the start
+      unique_data->moveToStart();
+      num_repetitions->moveToStart();
+      double SD = 0;
+      // Loop through the unique data points
+      for(int i = 0; i < unique_data->length(); i++){
+        // Add the square of the difference between the data and the mean multiplied by the number of repititions for each data point
+        SD += pow((unique_data->getValue() - mean), 2) * num_repetitions->getValue();
+        unique_data->next();
+        num_repetitions->next();
+      }
+      // Divide the sum by the number of items minus 1, then sqrt that to get the final standard deviation and return it
+      return sqrt(SD/(getTotalLength() - 1));
+    }
+
+    double calculate_min(){
+      /*
+       How do we obtain the minimum data item in the data set...
+       We loop through the data set and keep track of the minimum value
+       If the current value is less than the current minimum value we replace the current minimum value with the current value
+      */
+      unique_data->moveToStart();
+      double localmin = unique_data->getValue();
+      for(int i = 0; i < unique_data->length(); i++){
+        if(unique_data->getValue() < localmin){
+          localmin = unique_data->getValue();
+        }
+        unique_data->next();
+      }
+      return localmin;
+    }
+
+    double calculate_max(){
+      /* Same as min but we keep track of the maximum data item
+      */
+      unique_data->moveToStart();
+      double localmax = unique_data->getValue();
+      for(int i = 0; i < unique_data->length(); i++){
+        if(unique_data->getValue() > localmax){
+          localmax = unique_data->getValue();
+        }
+        unique_data->next();
+      }
+      return localmax;
+    }
+
   public:
     // We define the constructor and destructor as well as the getters and setters for the above statistics and adding data
     // The default constructor sets all statistics to 0
@@ -116,7 +201,7 @@ class Simple_stat {
         }
       }
       size++;
-      // calculate();
+      calculate();
     }
 
     void printAll(){
@@ -155,6 +240,8 @@ class Simple_stat {
     }
 
     void calculate(){
+      // Calculate and set the sum
+      sum = get_sum();
       // We use the calculate_mean method to calculate the mean
       mean = calculate_mean();
       // We use the calculate_SD method to calculate the standard deviation
@@ -184,92 +271,6 @@ class Simple_stat {
 
     int getTotalLength(){
       return size;
-    }
-
-    bool check_unique(const T& data){
-      // We use the check_unique method to check if the data is unique
-      if(unique_data->length() == 0){
-        return true;
-      }
-      unique_data->moveToStart();
-      for(int i = 0; i < unique_data->length(); i++){
-        if(unique_data->getValue() == data){
-          return false;
-        }
-        unique_data->next();
-      }
-      return true;
-    }
-
-    double calculate_mean(){
-      /*
-       How do we get the mean?
-       The mean is found by adding up things together then dividing by the number of things
-       */
-
-      // We use the get_sum method to get the sum of the data object
-      double sum = get_sum();
-      // size is a private variable which is automatically incremented on insert
-      return sum/size;
-    }
-
-    double calculate_SD(){
-
-      /*
-       How do we calculate standard
-
-      Standard deviation is found using the formula (Sum of (value of a data set minus the mean of the data set))^2)/(n-1)
-       This means that we are depend on the function/result of the equation for mean.
-
-       */
-
-      // We use the get_mean method to get the mean of the data object
-      double mean = calculate_mean();
-
-      // Move the lists to the start
-      unique_data->moveToStart();
-      num_repetitions->moveToStart();
-      double SD = 0;
-      // Loop through the unique data points
-      for(int i = 0; i < unique_data->length(); i++){
-        // Add the square of the difference between the data and the mean multiplied by the number of repititions for each data point
-        SD += pow((unique_data->getValue() - mean), 2) * num_repetitions->getValue();
-        unique_data->next();
-        num_repetitions->next();
-      }
-      // Divide the sum by the number of items minus 1, then sqrt that to get the final standard deviation and return it
-      return sqrt(SD/(getTotalLength() - 1));
-    }
-
-    double calculate_min(){
-      /*
-       How do we obtain the minimum data item in the data set...
-       We loop through the data set and keep track of the minimum value
-       If the current value is less than the current minimum value we replace the current minimum value with the current value
-      */
-      unique_data->moveToStart();
-      double localmin = unique_data->getValue();
-      for(int i = 0; i < unique_data->length(); i++){
-        if(unique_data->getValue() < localmin){
-          localmin = unique_data->getValue();
-        }
-        unique_data->next();
-      }
-      return localmin;
-    }
-
-    double calculate_max(){
-      /* Same as min but we keep track of the maximum data item
-      */
-      unique_data->moveToStart();
-      double localmax = unique_data->getValue();
-      for(int i = 0; i < unique_data->length(); i++){
-        if(unique_data->getValue() > localmax){
-          localmax = unique_data->getValue();
-        }
-        unique_data->next();
-      }
-      return localmax;
     }
 
 };

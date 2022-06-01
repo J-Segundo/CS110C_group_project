@@ -82,10 +82,10 @@ int main(int argc, char *argv[])
   std::cout << "Number of unique numbers:" << test.getLength() << std::endl;
   std::cout << "Number of total numbers:" << test.getTotalLength() << std::endl;
   std::cout << "Sum: " << test.get_sum() << std::endl;
-  std::cout << "Mean: " << test.calculate_mean() << std::endl;
-  std::cout << "Min: " << test.calculate_min() << std::endl;
-  std::cout << "Max: " << test.calculate_max() << std::endl;
-  std::cout << "SD: " << test.calculate_SD() << std::endl;
+  std::cout << "Mean: " << test.get_mean() << std::endl;
+  std::cout << "Min: " << test.get_min() << std::endl;
+  std::cout << "Max: " << test.get_max() << std::endl;
+  std::cout << "SD: " << test.get_SD() << std::endl;
 
 }
 
