@@ -1,5 +1,11 @@
 # CS110C_group_project
 CS110C group project
+
+To test and run:
+
+    g++ main.cpp main
+    ./main
+
 In this group project you will utilize a suitable linear data structure you  learned in linear structures lesson to create a specialized data structure dedicated to represent highly duplicated numeric data with very frequent demand for simple statistics (mentioned in the problem statement) as a C++ class template. Your specialized data structure will offer
 
 time access to those simple statistics. Updates to this data structure is very rare. So it is ok, if they may be expensive operations like O(n).

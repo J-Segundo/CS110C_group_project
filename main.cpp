@@ -68,14 +68,14 @@
 int main(int argc, char *argv[])
 {
   Simple_stat <int, 10> test;
-  test.insert(6);
-  test.insert(2);
-  test.insert(2);
-  test.insert(3);
-  test.insert(3);
-  test.insert(4);
-  test.insert(2);
-  test.insert(10);
+  test.append(6);
+  test.append(2);
+  test.append(2);
+  test.append(3);
+  test.append(3);
+  test.append(4);
+  test.append(2);
+  test.append(10);
   test.printAll();
   test.print_unique();
   test.print_num_repetitions();

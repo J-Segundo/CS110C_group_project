@@ -39,11 +39,28 @@ class Simple_stat {
     // This is more space efficient than storing the same repeated data assuming the data has an average repetitions per value of greater than 2
     AList<int>* num_repetitions = new AList<int>(N);
 
+    void calculate(){
+      // Calculate and set the sum
+      sum = get_sum();
+      // We use the calculate_mean method to calculate the mean
+      mean = calculate_mean();
+      // We use the calculate_SD method to calculate the standard deviation
+      SD = calculate_SD();
+      // We use the calculate_min method to calculate the minimum
+      min = calculate_min();
+      // We use the calculate_max method to calculate the maximum
+      max = calculate_max();
+    }
+
+
+    // We use the check_unique method to check if the data is unique
     bool check_unique(const T& data){
-      // We use the check_unique method to check if the data is unique
+      // Return true if the data is empty
       if(unique_data->length() == 0){
         return true;
       }
+
+      // Loop through the unique data listq and check if it matches
       unique_data->moveToStart();
       for(int i = 0; i < unique_data->length(); i++){
         if(unique_data->getValue() == data){
@@ -69,13 +86,14 @@ class Simple_stat {
     double calculate_SD(){
 
       /*
-       How do we calculate standard
+       How do we calculate standard deviation
 
       Standard deviation is found using the formula (Sum of (value of a data set minus the mean of the data set))^2)/(n-1)
        This means that we are depend on the function/result of the equation for mean.
 
        */
 
+      // The mean function is called before this function is called so we know that the mean value is up to date before running this calculation. This also saves having to call the mean function multiple times.
       // Move the lists to the start
       unique_data->moveToStart();
       num_repetitions->moveToStart();
@@ -168,16 +186,16 @@ class Simple_stat {
     // We define the feed method that adds data to the data object
     // This method is expected to be used for feeding data from a container
     void feed(const T& container){
-      // We use the insert method to add the data from the container
-      for(auto it = container.begin(); it != container.end(); ++it){
-        insert(*it);
+      // We use the append method to add the data from the container
+      for(auto it = container.begin(); it != container.end(); it++){
+        append(*it);
       }
       // We use the calculate method to calculate the statistics
       calculate();
     }
-    // We define the insert method that adds a data item to the data object
-    // This method is expected to be used for adding data from a container
-    void insert(const T& data){
+
+    // We define the append method that adds a data item to the data object
+    void append(const T& data){
       if(check_unique(data)){
         // If the data is unique we add it to the unique_data array
         unique_data->append(data);
@@ -237,19 +255,6 @@ class Simple_stat {
         num_repetitions->next();
       }
       std::cout << std::endl;
-    }
-
-    void calculate(){
-      // Calculate and set the sum
-      sum = get_sum();
-      // We use the calculate_mean method to calculate the mean
-      mean = calculate_mean();
-      // We use the calculate_SD method to calculate the standard deviation
-      SD = calculate_SD();
-      // We use the calculate_min method to calculate the minimum
-      min = calculate_min();
-      // We use the calculate_max method to calculate the maximum
-      max = calculate_max();
     }
 
     double get_sum(){
