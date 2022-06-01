@@ -3,6 +3,7 @@
 
 // Simple stat class by Lingfeng Ren and Juan Segundo
 #include "math.h"
+#include "dbstl_set.h"
 
 #include "LinearStructures/alist.h"
 
@@ -268,6 +269,17 @@ class Simple_stat {
       std::cout << "Min: " << get_min() << std::endl;
       std::cout << "Max: " << get_max() << std::endl;
       std::cout << "Sum: " << get_sum() << std::endl;
+    }
+
+    // Function to return a unique set of the data
+    std::set<T> unique_set(){
+      std::set<T> unique;
+      unique_data->moveToStart();
+      for(int i = 0; i < unique_data->length(); i++){
+        unique.insert(unique_data->getValue());
+        unique_data->next();
+      }
+      return unique;
     }
 };
 

@@ -64,6 +64,7 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 #include "simple_stat.h"
 
 int main(int argc, char *argv[])
@@ -91,7 +92,8 @@ int main(int argc, char *argv[])
   test2.feed(v);
 
   test2.printAll();
-  test.print_all_stats();
+  test2.print_all_stats();
+  std::set<float> set = test2.unique_set();
 
 }
 
