@@ -281,6 +281,31 @@ class Simple_stat {
       }
       return unique;
     }
+
+    // Function to search for a data item and return the number of times it is repeated and the location of its first occurrence
+    std::pair<int, int> search(T const& data){
+      unique_data->moveToStart();
+      num_repetitions->moveToStart();
+      for(int i = 0; i < unique_data->length(); i++){
+        if(unique_data->getValue() == data){
+          return std::make_pair(i, num_repetitions->getValue());
+          break;
+        }
+        unique_data->next();
+        num_repetitions->next();
+      }
+    }
+
+    // Override the [] operator to return the data value at the given index
+    T operator[](int index){
+      unique_data->moveToStart();
+      for(int i = 0; i < unique_data->length(); i++){
+        if(index == i){
+          return unique_data->getValue();
+        }
+        unique_data->next();
+      }
+    }
 };
 
 #endif

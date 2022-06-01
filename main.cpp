@@ -87,12 +87,17 @@ int main(int argc, char *argv[])
 
   std::cout << "\nTesting feed:\n";
   // Testing the feed method and constructor
-  std::vector <float> v = {3, 4, 3, 5, 6, 9, 10, 4, 3, 3, 8};
+  std::vector <float> v = {3, 4, 3, 5, 6, 9, 10, 4, 3, 3, 8, 8};
   Simple_stat <float, 15, std::vector<float>> test2;
   test2.feed(v);
 
   test2.printAll();
   test2.print_all_stats();
+
+  std::pair <int, int> p = test2.search(8);
+  // Test searching
+  std::cout << "The first occurrence of 8 is at index " << p.first << " and it occurs " << p.second << " times\n";
+  std::cout << "The element at index 6 is " << test2[6] << "\n";
 
   // Testing the unique set
   std::set<float> set = test2.unique_set();
