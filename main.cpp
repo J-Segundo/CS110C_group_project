@@ -93,7 +93,15 @@ int main(int argc, char *argv[])
 
   test2.printAll();
   test2.print_all_stats();
+
+  // Testing the unique set
   std::set<float> set = test2.unique_set();
+  std::cout << "\nTesting unique_set:\n";
+  // Feeding the set into another instance of simple_stat to demonstrate how it accepts any container
+  Simple_stat <float, 15, std::set<float>> test3;
+  test3.feed(set);
+  test3.printAll();
+  test3.print_all_stats();
 
 }
 
