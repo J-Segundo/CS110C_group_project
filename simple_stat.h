@@ -344,6 +344,17 @@ class Simple_stat {
         std::cout << "Value not found" << std::endl;
       }
     }
+
+    void empty (){
+      unique_data->clear();
+      num_repetitions->clear();
+      mean = 0;
+      SD = 0;
+      min = 0;
+      max = 0;
+      sum = 0;
+      size = 0;
+    }
 };
 
 #endif

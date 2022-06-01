@@ -117,6 +117,10 @@ int main(int argc, char *argv[])
   test3.printAll();
   test3.print_all_stats();
 
+  // Test clear
+  std::cout << "\nEmptying:\n";
+  test3.empty();
+  test3.printAll();
 }
 
 
