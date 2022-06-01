@@ -63,11 +63,14 @@
  */
 
 #include <iostream>
+#include <vector>
 #include "simple_stat.h"
 
 int main(int argc, char *argv[])
 {
   Simple_stat <int, 10> test;
+
+  // Testing appending and statistics operations
   test.append(6);
   test.append(2);
   test.append(2);
@@ -79,13 +82,16 @@ int main(int argc, char *argv[])
   test.printAll();
   test.print_unique();
   test.print_num_repetitions();
-  std::cout << "Number of unique numbers:" << test.getLength() << std::endl;
-  std::cout << "Number of total numbers:" << test.getTotalLength() << std::endl;
-  std::cout << "Sum: " << test.get_sum() << std::endl;
-  std::cout << "Mean: " << test.get_mean() << std::endl;
-  std::cout << "Min: " << test.get_min() << std::endl;
-  std::cout << "Max: " << test.get_max() << std::endl;
-  std::cout << "SD: " << test.get_SD() << std::endl;
+  test.print_all_stats();
+
+  std::cout << "\nTesting feed:\n";
+  // Testing the feed method and constructor
+  std::vector <float> v = {3, 4, 3, 5, 6, 9, 10, 4, 3, 3, 8};
+  Simple_stat <float, 15, std::vector<float>> test2;
+  test2.feed(v);
+
+  test2.printAll();
+  test.print_all_stats();
 
 }
 

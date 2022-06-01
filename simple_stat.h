@@ -4,21 +4,14 @@
 // Simple stat class by Lingfeng Ren and Juan Segundo
 #include "math.h"
 
-#include "LinearStructures/link.h"
-#include "LinearStructures/dlink.h"
 #include "LinearStructures/alist.h"
-#include "LinearStructures/llist.h"
-#include "LinearStructures/dllist.h"
-#include "LinearStructures/astack.h"
-#include "LinearStructures/lstack.h"
-#include "LinearStructures/aqueue.h"
-#include "LinearStructures/lqueue.h"
 
 // We define our simple_stat class template here
 // We will use this class to represent our data object
 // The template will use parameter N to represent the maximum size of the data object
-// The class will use a link based data structure to store the data
-template <typename T, int N>
+// The class will use the array based list to store the data
+
+template <typename T, int N, typename C = T>
 class Simple_stat {
   // We require O(1) access to the statistics so we store these invidiual values as private members
   private:
@@ -152,17 +145,6 @@ class Simple_stat {
       size = 0;
     }
     // We also create a constructor that takes in a container of type T and adds the data to the data object
-    // This constructor is expected to be used for feeding data from a container
-    Simple_stat(const T& container){
-      mean = 0;
-      SD = 0;
-      min = 0;
-      max = 0;
-      sum = 0;
-      size = 0;
-      // We use the feed method to add the data from the container
-      feed(container);
-    }
     // We define the destructor
     ~Simple_stat(){
       // We delete the unique_data and num_repetitions arrays
@@ -185,7 +167,7 @@ class Simple_stat {
 
     // We define the feed method that adds data to the data object
     // This method is expected to be used for feeding data from a container
-    void feed(const T& container){
+    void feed(C const& container){
       // We use the append method to add the data from the container
       for(auto it = container.begin(); it != container.end(); it++){
         append(*it);
@@ -278,6 +260,15 @@ class Simple_stat {
       return size;
     }
 
+    void print_all_stats(){
+      std::cout << "Number of unique numbers:" << getLength() << std::endl;
+      std::cout << "Number of total numbers:" << getTotalLength() << std::endl;
+      std::cout << "Mean: " << get_mean() << std::endl;
+      std::cout << "SD: " << get_SD() << std::endl;
+      std::cout << "Min: " << get_min() << std::endl;
+      std::cout << "Max: " << get_max() << std::endl;
+      std::cout << "Sum: " << get_sum() << std::endl;
+    }
 };
 
 #endif
