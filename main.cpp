@@ -62,82 +62,32 @@
 
  */
 
-
-// Okay, So I'm giving this a try.
-
-
-#include "link.h"
-#include "dlink.h"
-#include "alist.h"
-#include "llist.h"
-#include "dllist.h"
-#include "astack.h"
-#include "lstack.h"
-#include "aqueue.h"
-#include "lqueue.h"
-
+#include <iostream>
+#include "simple_stat.h"
 
 int main(int argc, char *argv[])
 {
-
-
-//  I think we want our calculations to be private. So no one can change how it works. We can use it but dont need or have to know how we get the calculations.
-
-
-
-
-/*
- How do we get the mean?
- The mean is found by adding up things together
- ...I would assume that this would be the sum of the list and then dividing by the number of elements in that list.
- */
-
- double mean;
- void calculateMean() { // Function to calculate the mean
-
- mean = (sum of all things in the data elements in the object)/(number of objects}....(sum of all data points)/(number of data points)
+  Simple_stat <int, 10> test;
+  test.insert(6);
+  test.insert(2);
+  test.insert(2);
+  test.insert(3);
+  test.insert(3);
+  test.insert(4);
+  test.insert(2);
+  test.insert(10);
+  test.printAll();
+  test.print_unique();
+  test.print_num_repetitions();
+  std::cout << "Number of unique numbers:" << test.getLength() << std::endl;
+  std::cout << "Number of total numbers:" << test.getTotalLength() << std::endl;
+  std::cout << "Sum: " << test.get_sum() << std::endl;
+  std::cout << "Mean: " << test.calculate_mean() << std::endl;
+  std::cout << "Min: " << test.calculate_min() << std::endl;
+  std::cout << "Max: " << test.calculate_max() << std::endl;
+  std::cout << "SD: " << test.calculate_SD() << std::endl;
 
 }
-
-
-
-/*
- How do we calculate standard
-
-Standard deviation is found using the formula (Sum of (value of a data set minus the mean of the data set))^2)/(n-1)
- This means that we are depend on the function/result of the equation for mean.
-
- */
-
-double standardDeviation;
-
- void calculateStandardDev() {
-
-    Numerator = pow((sum of the difference - mean, 2.0)
-
- standardDeviation = sqrt(Numerator/number of objects)
-
-
- }
-
-
-/*
- How do we obtain the minimum data item in the data set...
- This would involve doing a search of the data set and have it be retuned...I'm not sure where it's going to be returned tho...
- We get the list. We sort through it. Find the location and address of that maximum data item.
-*/
-
-/*
- How do we obtain the minimum data item in the data set...
- This would also involve searching the data set and having it be returned
- We get the list. We sort through it. Find the location and address of that minimum data item.
-*/
-
-
-
-//  We have a class called AList that we have to go through and find the min, max, mean, and standard
-//  There is no limit as to how many times these stats can be accessed.
-
 
 
 //  get_mean: returns the mean value of the current entire data set
@@ -146,5 +96,4 @@ double standardDeviation;
 //  get_max: returns the maximum data item in the current entire data set
 
     
-}
 
