@@ -10,7 +10,10 @@
 // We define our simple_stat class template here
 // We will use this class to represent our data object
 // The template will use parameter N to represent the maximum size of the data object
-// The class will use the array based list to store the data
+// The template will use parameter T to represent the data type of the data object
+// the C parameter defines which container will be used for feeding, and by default is ignored
+
+// The class will use the array based list to store the data because it is the most space efficient for a fixed number of items
 
 template <typename T, int N, typename C = T>
 class Simple_stat {
@@ -27,10 +30,10 @@ class Simple_stat {
     // An array based list has the best access time to the data and space efficiency for a known number of data elements
     // This is expected to be any number data type (int, double, etc)
     // N is the maximum size of the data object
-    // Because we want to store only unique data elements but also record the number of repetitions we must two arrays, one for the data and one for the number of repetitions
-    // We use a pointer to dynamically allocated memory to store the data
+    // Because we want to store only unique data elements but also record the number of repetitions we must use two arrays, one for the data and one for the number of repetitions
+    // We use a pointer to dynamically allocate memory to store the data
     AList<T>* unique_data = new AList<T>(N);
-    // This is more space efficient than storing the same repeated data assuming the data has an average repetitions per value of greater than 2
+    // Using a second array to store repititions is more space efficient than storing the same repeated data assuming the data has an average repetitions per value of greater than 2, which should be true for highly repeated data
     AList<int>* num_repetitions = new AList<int>(N);
 
     void calculate(){
@@ -54,7 +57,7 @@ class Simple_stat {
         return true;
       }
 
-      // Loop through the unique data listq and check if it matches
+      // Loop through the unique data list and check if it matches
       unique_data->moveToStart();
       for(int i = 0; i < unique_data->length(); i++){
         if(unique_data->getValue() == data){
@@ -145,7 +148,6 @@ class Simple_stat {
       sum = 0;
       size = 0;
     }
-    // We also create a constructor that takes in a container of type T and adds the data to the data object
     // We define the destructor
     ~Simple_stat(){
       // We delete the unique_data and num_repetitions arrays
@@ -182,7 +184,7 @@ class Simple_stat {
       if(check_unique(data)){
         // If the data is unique we add it to the unique_data array
         unique_data->append(data);
-        // We add 1 to the number of repetitions for the data
+        // We add an element of 1 to the repetitions array to keep track
         num_repetitions->append(1);
       }
       else{
@@ -253,14 +255,17 @@ class Simple_stat {
       return sum;
     }
 
+    // Returns the number of unique data items
     int getLength(){
       return unique_data->length();
     }
 
+    // Returns the total number of data items
     int getTotalLength(){
       return size;
     }
 
+    // Handy dandily prints everything
     void print_all_stats(){
       std::cout << "Number of unique numbers:" << getLength() << std::endl;
       std::cout << "Number of total numbers:" << getTotalLength() << std::endl;
@@ -272,6 +277,7 @@ class Simple_stat {
     }
 
     // Function to return a unique set of the data
+    // loops through the unique data list and copies the data into a set then returns it
     std::set<T> unique_set(){
       std::set<T> unique;
       unique_data->moveToStart();
@@ -308,6 +314,7 @@ class Simple_stat {
     }
 
     // remove a certain number of data items from the data object
+    // Will check if the number of repetitions to remove is less than the existing number or if the data value cannot be found
     void removem(int const& data, int const& num){
       // Check that the value exists
       unique_data->moveToStart();
@@ -345,6 +352,7 @@ class Simple_stat {
       }
     }
 
+    // Empties the data objects and resets all statistics
     void empty (){
       unique_data->clear();
       num_repetitions->clear();
